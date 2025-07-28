@@ -1,0 +1,39 @@
+/* CSS específico para ScrollArea de shadcn/ui */
+[data-radix-scroll-area-viewport] {
+  scrollbar-width: thin;
+  scrollbar-color: #717171 #1c1c1c;
+}
+
+[data-radix-scroll-area-viewport]::-webkit-scrollbar {
+  width: 6px;
+}
+
+[data-radix-scroll-area-viewport]::-webkit-scrollbar-track {
+  background: #1c1c1c;
+}
+
+[data-radix-scroll-area-viewport]::-webkit-scrollbar-thumb {
+  background: #717171;
+  border-radius: 3px;
+}
+
+[data-radix-scroll-area-viewport]::-webkit-scrollbar-thumb:hover {
+  background: #8a8a8a;
+}
+
+/* Anular estilos de focus en Select Items */
+[data-radix-select-item] {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+[data-radix-select-item]:focus {
+  background-color: #717171 !important;
+  outline: none !important;
+}
+
+[data-radix-select-item][data-highlighted] {
+  background-color: #717171 !important;
+  outline: none !important;
+}
