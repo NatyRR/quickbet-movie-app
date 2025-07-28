@@ -5,6 +5,9 @@ import React from 'react';
 // components
 import { MovieCard } from '@/components/molecules/movie-card';
 
+// hooks
+import { useResponsiveGrid } from '@/hooks';
+
 // icons
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
@@ -36,6 +39,14 @@ export const MoviesGrid: React.FC<MoviesGridProps> = ({
   className = '',
   fullHeight = false,
 }) => {
+  // Hook para grid responsivo dinámico
+  const { containerRef, gridStyle, fallbackClasses } = useResponsiveGrid({
+    minCardWidth: 160,
+    maxCardWidth: 200,
+    gap: 20,
+    minColumns: 2,
+    maxColumns: 6,
+  });
   const handlePrevPage = () => {
     if (onPageChange && currentPage > 1) {
       onPageChange(currentPage - 1);
@@ -116,24 +127,31 @@ export const MoviesGrid: React.FC<MoviesGridProps> = ({
       </div>
 
       {isLoading && (
-        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6'>
+        <div 
+          className={fallbackClasses}
+          style={gridStyle}
+        >
           {Array.from({ length: 20 }).map((_, index) => (
             <div
               key={index}
-              className='bg-gray-700 rounded-lg animate-pulse aspect-[2/3]'
+              className="bg-gray-700 rounded-lg animate-pulse aspect-[2/3]"
             />
           ))}
         </div>
       )}
 
       {!isLoading && movies.length > 0 && (
-        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6'>
+        <div 
+          ref={containerRef}
+          className={fallbackClasses}
+          style={gridStyle}
+        >
           {movies.map((movie) => (
             <MovieCard
               key={movie.id}
               movie={movie}
               onClick={onMovieClick}
-              className='h-full'
+              className="h-full"
             />
           ))}
         </div>
@@ -147,14 +165,15 @@ export const MoviesGrid: React.FC<MoviesGridProps> = ({
       )}
 
       {!isLoading && totalPages > 1 && (
-        <div className='flex items-center justify-center mt-12 space-x-2'>
+        <div className="flex items-center justify-center mt-8 sm:mt-12 space-x-1 sm:space-x-2 px-4">
           <button
             onClick={handlePrevPage}
             disabled={currentPage === 1}
-            className='
+            className="
               flex 
               items-center 
-              px-3 
+              px-2
+              sm:px-3 
               py-2 
               rounded-lg 
               bg-gray-700 
@@ -164,27 +183,31 @@ export const MoviesGrid: React.FC<MoviesGridProps> = ({
               disabled:cursor-not-allowed
               transition-colors
               duration-200
-            '
+              text-sm
+            "
           >
             <ChevronLeft size={16} />
-            <span className='ml-1 hidden sm:inline'>Previous</span>
+            <span className="ml-1 hidden sm:inline">Previous</span>
           </button>
 
           {/* Page Numbers */}
-          <div className='flex items-center space-x-1'>
+          <div className="flex items-center space-x-1 flex-1 justify-center max-w-xs overflow-x-auto">
             {getPaginationNumbers().map((page, index) => (
               <React.Fragment key={index}>
                 {page === '...' ? (
-                  <span className='px-3 py-2 text-gray-400'>...</span>
+                  <span className="px-2 sm:px-3 py-2 text-gray-400 text-sm">...</span>
                 ) : (
                   <button
                     onClick={() => handlePageSelect(page as number)}
                     className={`
-                      px-3 
+                      px-2
+                      sm:px-3 
                       py-2 
                       rounded-lg 
                       transition-colors
                       duration-200
+                      text-sm
+                      min-w-[32px]
                       ${
                         currentPage === page
                           ? 'bg-blue-600 text-white'
@@ -202,10 +225,11 @@ export const MoviesGrid: React.FC<MoviesGridProps> = ({
           <button
             onClick={handleNextPage}
             disabled={currentPage === totalPages}
-            className='
+            className="
               flex 
               items-center 
-              px-3 
+              px-2
+              sm:px-3 
               py-2 
               rounded-lg 
               bg-gray-700 
@@ -215,9 +239,10 @@ export const MoviesGrid: React.FC<MoviesGridProps> = ({
               disabled:cursor-not-allowed
               transition-colors
               duration-200
-            '
+              text-sm
+            "
           >
-            <span className='mr-1 hidden sm:inline'>Next</span>
+            <span className="mr-1 hidden sm:inline">Next</span>
             <ChevronRight size={16} />
           </button>
         </div>

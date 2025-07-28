@@ -37,6 +37,9 @@ export const RecommendationCard: FC<RecommendationCardProps> = ({
     <div
       className={`
         relative
+        w-full
+        md:w-[200px]
+        aspect-[200/272]
         bg-[#3A3A3A]
         rounded-lg
         overflow-hidden
@@ -48,14 +51,10 @@ export const RecommendationCard: FC<RecommendationCardProps> = ({
         group
         ${className}
       `}
-      style={{ width: '200px', height: '272px' }}
       onClick={handleCardClick}
     >
-      {/* Imagen - 80% del total (218px) */}
-      <div
-        className='relative overflow-hidden'
-        style={{ width: '200px', height: '218px' }}
-      >
+      {/* Imagen - 80% del total */}
+      <div className="relative overflow-hidden w-full" style={{ height: '80%' }}>
         <Image
           src={imageUrl}
           alt={movie.title}
@@ -66,14 +65,10 @@ export const RecommendationCard: FC<RecommendationCardProps> = ({
         />
       </div>
 
-      {/* Descripción - 20% del total (54px) */}
+      {/* Descripción - 20% del total */}
       <div
-        className='bg-[#3A3A3A] flex items-center justify-center'
-        style={{
-          width: '200px',
-          height: '54px',
-          padding: '8px',
-        }}
+        className="bg-[#3A3A3A] flex items-center justify-center w-full px-2 py-1"
+        style={{ height: '20%' }}
       >
         <h3 className='text-white font-bold text-sm leading-tight line-clamp-1 text-center'>
           {movie?.title || 'Título no disponible'}

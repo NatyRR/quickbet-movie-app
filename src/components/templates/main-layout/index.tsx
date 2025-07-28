@@ -5,6 +5,7 @@ import React from 'react';
 // components
 import { HeroBanner } from '@/components/molecules/hero-banner';
 import { Sidebar } from '@/components/molecules/sidebar';
+import { FiltersBar } from '@/components/molecules/filters-bar';
 
 // providers
 import { SidebarProvider, useSidebarContext } from '@/providers';
@@ -26,10 +27,18 @@ const MainLayoutContent: React.FC<MainLayoutProps> = ({
   } = useSidebarContext();
 
   return (
-    <div className='min-h-screen bg-black flex flex-col'>
+    <div className="min-h-screen bg-black flex flex-col">
       <HeroBanner />
 
-      <div className='flex flex-1'>
+      {/* Mobile Filters Bar */}
+      <FiltersBar
+        searchQuery={enableSidebarFilters ? searchQuery : ''}
+        selectedGenreId={enableSidebarFilters ? selectedGenreId : null}
+        onSearchChange={enableSidebarFilters ? handleSearchChange : () => {}}
+        onGenreChange={enableSidebarFilters ? handleGenreChange : () => {}}
+      />
+
+      <div className="w-full flex flex-1">
         <Sidebar
           searchQuery={enableSidebarFilters ? searchQuery : ''}
           selectedGenreId={enableSidebarFilters ? selectedGenreId : null}
@@ -37,7 +46,7 @@ const MainLayoutContent: React.FC<MainLayoutProps> = ({
           onGenreChange={enableSidebarFilters ? handleGenreChange : () => {}}
         />
 
-        <div className='flex-1 bg-gray-900 min-h-full'>{children}</div>
+        <div className="flex-1 bg-gray-900 min-h-full">{children}</div>
       </div>
     </div>
   );

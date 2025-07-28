@@ -11,6 +11,7 @@ interface NavigationLinkProps {
   label: string;
   isActive?: boolean;
   className?: string;
+  onClick?: () => void;
 }
 
 export const NavigationLink: FC<NavigationLinkProps> = ({
@@ -18,10 +19,12 @@ export const NavigationLink: FC<NavigationLinkProps> = ({
   label,
   isActive = false,
   className = '',
+  onClick,
 }) => {
   return (
     <Link
       href={href}
+      onClick={onClick}
       className={`
         text-white 
         font-medium 

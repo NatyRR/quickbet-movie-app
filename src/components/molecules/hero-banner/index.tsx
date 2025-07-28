@@ -88,10 +88,10 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({ className = '' }) => {
         </div>
       )}
       <div
-        className='
+        className="
         relative 
         h-full 
-        max-w-7xl 
+        max-w-[1600px] 
         mx-auto 
         px-4 
         sm:px-6 
@@ -100,7 +100,7 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({ className = '' }) => {
         flex-col
         justify-end
         pb-12
-      '
+      "
       >
         <div className='flex items-end justify-between'>
           <div className='flex-1 max-w-4xl'>

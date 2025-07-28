@@ -100,35 +100,3 @@ export const usePopularGenres = (limit?: number): Genre[] => {
     return limit ? sortedGenres.slice(0, limit) : sortedGenres;
   }, [genresData, limit]);
 };
-
-export const useGenreColors = (): Record<number, string> => {
-  return useMemo(
-    () => ({
-      28: '#ef4444', // Action - Red
-      12: '#f97316', // Adventure - Orange
-      16: '#eab308', // Animation - Yellow
-      35: '#22c55e', // Comedy - Green
-      80: '#3b82f6', // Crime - Blue
-      99: '#6366f1', // Documentary - Indigo
-      18: '#8b5cf6', // Drama - Purple
-      10751: '#ec4899', // Family - Pink
-      14: '#06b6d4', // Fantasy - Cyan
-      36: '#84cc16', // History - Lime
-      27: '#dc2626', // Horror - Dark Red
-      10402: '#f59e0b', // Music - Amber
-      9648: '#6b7280', // Mystery - Gray
-      10749: '#f43f5e', // Romance - Rose
-      878: '#0ea5e9', // Science Fiction - Sky
-      10770: '#8b5cf6', // TV Movie - Purple
-      53: '#ef4444', // Thriller - Red
-      10752: '#57534e', // War - Stone
-      37: '#a3a3a3', // Western - Neutral
-    }),
-    []
-  );
-};
-
-export const useGenreColor = (genreId: number): string => {
-  const genreColors = useGenreColors();
-  return genreColors[genreId] || '#6b7280'; // Default gray
-};
