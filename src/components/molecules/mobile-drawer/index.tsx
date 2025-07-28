@@ -23,7 +23,7 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({
     <>
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
+        className='fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden'
         onClick={onClose}
       />
 
@@ -46,32 +46,32 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({
           ${isOpen ? 'translate-x-0' : 'translate-x-full'}
         `}
       >
-        <div className="p-6 space-y-6">
+        <div className='p-6 space-y-6'>
           {/* Navigation Links */}
-          <nav className="flex flex-col gap-6">
+          <nav className='flex flex-col gap-6'>
             <NavigationLink
-              href="/"
-              label="Popular"
+              href='/'
+              label='Popular'
               isActive={pathname === '/' || pathname === '/movie'}
               onClick={onClose}
             />
             <NavigationLink
-              href="/favorites"
-              label="Favorites"
+              href='/favorites'
+              label='Favorites'
               isActive={pathname === '/favorites'}
               onClick={onClose}
             />
           </nav>
 
           {/* Divider */}
-          <div className="border-t border-gray-700" />
+          <div className='border-t border-gray-700' />
 
           {/* User Section */}
-          <div className="flex items-center space-x-3">
+          <div className='flex items-center space-x-3'>
             <AuthModal>
-              <button className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
-                <CircleUserRound size={24} color="white" />
-                <span className="text-white text-sm">Account</span>
+              <button className='flex items-center space-x-2 hover:opacity-80 transition-opacity'>
+                <CircleUserRound size={24} color='white' />
+                <span className='text-white text-sm'>Account</span>
               </button>
             </AuthModal>
           </div>

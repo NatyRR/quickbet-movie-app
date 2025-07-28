@@ -65,7 +65,7 @@ export const MovieCard: FC<MovieCardProps> = ({
       `}
       onClick={handleCardClick}
     >
-      <div className="relative overflow-hidden flex-1">
+      <div className='relative overflow-hidden flex-1'>
         <Image
           src={imageUrl}
           alt={movie.title}
@@ -76,20 +76,20 @@ export const MovieCard: FC<MovieCardProps> = ({
         />
       </div>
 
-      <div className="bg-[#262626] flex flex-col justify-between flex-shrink-0 p-2 gap-2 min-h-[112px]">
-        <div className="flex flex-col gap-1">
-          <h3 className="text-white font-bold text-xs sm:text-sm leading-tight line-clamp-1">
+      <div className='bg-[#262626] flex flex-col justify-between flex-shrink-0 p-2 gap-2 min-h-[112px]'>
+        <div className='flex flex-col gap-1'>
+          <h3 className='text-white font-bold text-xs sm:text-sm leading-tight line-clamp-1'>
             {movie?.title || 'Título no disponible'}
           </h3>
-          <p className="text-gray-400 text-xs leading-tight">{releaseYear}</p>
+          <p className='text-gray-400 text-xs leading-tight'>{releaseYear}</p>
         </div>
 
-        <div className="flex items-center justify-center gap-4 sm:gap-6 lg:gap-8 mt-auto">
+        <div className='flex items-center justify-center gap-4 sm:gap-6 lg:gap-8 mt-auto'>
           <div
             onClick={(e) => e.stopPropagation()}
-            className="flex flex-col items-center gap-1"
+            className='flex flex-col items-center gap-1'
           >
-            <span className="text-white text-[9px] sm:text-[10px]">Rating</span>
+            <span className='text-white text-[9px] sm:text-[10px]'>Rating</span>
             <RatingCircle
               rating={movie.vote_average}
               size={20}
@@ -99,9 +99,11 @@ export const MovieCard: FC<MovieCardProps> = ({
           </div>
           <div
             onClick={(e) => e.stopPropagation()}
-            className="flex flex-col items-center gap-1"
+            className='flex flex-col items-center gap-1'
           >
-            <span className="text-white text-[9px] sm:text-[10px]">Favorites</span>
+            <span className='text-white text-[9px] sm:text-[10px]'>
+              Favorites
+            </span>
             <FavoriteButton movie={movie} size={16} />
           </div>
         </div>

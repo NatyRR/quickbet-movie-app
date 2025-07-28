@@ -54,7 +54,10 @@ export const RecommendationCard: FC<RecommendationCardProps> = ({
       onClick={handleCardClick}
     >
       {/* Imagen - 80% del total */}
-      <div className="relative overflow-hidden w-full" style={{ height: '80%' }}>
+      <div
+        className='relative overflow-hidden w-full'
+        style={{ height: '80%' }}
+      >
         <Image
           src={imageUrl}
           alt={movie.title}
@@ -67,7 +70,7 @@ export const RecommendationCard: FC<RecommendationCardProps> = ({
 
       {/* Descripción - 20% del total */}
       <div
-        className="bg-[#3A3A3A] flex items-center justify-center w-full px-2 py-1"
+        className='bg-[#3A3A3A] flex items-center justify-center w-full px-2 py-1'
         style={{ height: '20%' }}
       >
         <h3 className='text-white font-bold text-sm leading-tight line-clamp-1 text-center'>

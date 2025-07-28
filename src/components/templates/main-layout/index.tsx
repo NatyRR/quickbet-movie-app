@@ -27,7 +27,7 @@ const MainLayoutContent: React.FC<MainLayoutProps> = ({
   } = useSidebarContext();
 
   return (
-    <div className="min-h-screen bg-black flex flex-col">
+    <div className='min-h-screen bg-black flex flex-col'>
       <HeroBanner />
 
       {/* Mobile Filters Bar */}
@@ -38,7 +38,7 @@ const MainLayoutContent: React.FC<MainLayoutProps> = ({
         onGenreChange={enableSidebarFilters ? handleGenreChange : () => {}}
       />
 
-      <div className="w-full flex flex-1">
+      <div className='w-full flex flex-1'>
         <Sidebar
           searchQuery={enableSidebarFilters ? searchQuery : ''}
           selectedGenreId={enableSidebarFilters ? selectedGenreId : null}
@@ -46,7 +46,7 @@ const MainLayoutContent: React.FC<MainLayoutProps> = ({
           onGenreChange={enableSidebarFilters ? handleGenreChange : () => {}}
         />
 
-        <div className="flex-1 bg-gray-900 min-h-full">{children}</div>
+        <div className='flex-1 bg-gray-900 min-h-full'>{children}</div>
       </div>
     </div>
   );

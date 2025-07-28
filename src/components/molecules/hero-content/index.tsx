@@ -21,21 +21,21 @@ export const HeroContent: React.FC<HeroContentProps> = ({
     <div className={`space-y-3 ${className}`}>
       {/* Título de la película */}
       <h1
-        className="
+        className='
         text-[24px] sm:text-[28px] md:text-[35px]
         leading-[28px] sm:leading-[32px] md:leading-[39px]
         font-bold 
         text-white 
         drop-shadow-lg
         font-sans
-      "
+      '
       >
         {title}
       </h1>
 
       {/* Descripción de la película */}
       <p
-        className="
+        className='
         text-[14px] sm:text-[16px] md:text-[20px]
         leading-[18px] sm:leading-[20px] md:leading-[24px]
         font-normal sm:font-medium md:font-bold
@@ -43,7 +43,7 @@ export const HeroContent: React.FC<HeroContentProps> = ({
         max-w-2xl
         drop-shadow-md
         font-sans
-      "
+      '
       >
         {truncateText(overview)}
       </p>

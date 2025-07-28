@@ -51,9 +51,9 @@ export const AuthModal = ({ children }: AuthModalProps) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="w-full h-full max-w-full max-h-full md:w-[1320px] md:h-[720px] md:max-w-[1320px] top-0 left-0 md:top-[50%] md:left-[50%] translate-x-0 translate-y-0 md:translate-x-[-50%] md:translate-y-[-50%] p-0 bg-transparent border-0">
-        <div className="w-full h-full md:w-[1320px] md:h-[720px] bg-black/80 border-0 md:border border-neutral-700 rounded-none md:rounded-lg overflow-hidden flex flex-col md:flex-row shadow-2xl">
-          <div className="w-full md:w-1/2 p-6 md:p-12 flex flex-col">
+      <DialogContent className='w-full h-full max-w-full max-h-full md:w-[1320px] md:h-[720px] md:max-w-[1320px] top-0 left-0 md:top-[50%] md:left-[50%] translate-x-0 translate-y-0 md:translate-x-[-50%] md:translate-y-[-50%] p-0 bg-transparent border-0'>
+        <div className='w-full h-full md:w-[1320px] md:h-[720px] bg-black/80 border-0 md:border border-neutral-700 rounded-none md:rounded-lg overflow-hidden flex flex-col md:flex-row shadow-2xl'>
+          <div className='w-full md:w-1/2 p-6 md:p-12 flex flex-col'>
             <button
               onClick={handleClose}
               className='flex items-center gap-2 text-white mb-8 self-start hover:opacity-80 transition-opacity'
@@ -62,7 +62,7 @@ export const AuthModal = ({ children }: AuthModalProps) => {
               <span>Back</span>
             </button>
 
-            <div className="flex bg-neutral-800 rounded-lg p-1 mb-6 md:mb-8 w-fit mx-auto">
+            <div className='flex bg-neutral-800 rounded-lg p-1 mb-6 md:mb-8 w-fit mx-auto'>
               <button
                 onClick={() => handleToggleMode(false)}
                 className={`px-6 py-2 rounded-md text-sm font-medium transition-all ${
@@ -87,7 +87,7 @@ export const AuthModal = ({ children }: AuthModalProps) => {
 
             <div className='flex-1'>
               <div>
-                <h2 className="text-white text-xl md:text-2xl font-semibold mb-6 md:mb-8 text-center md:text-left">
+                <h2 className='text-white text-xl md:text-2xl font-semibold mb-6 md:mb-8 text-center md:text-left'>
                   We love having you back
                 </h2>
               </div>
@@ -140,7 +140,7 @@ export const AuthModal = ({ children }: AuthModalProps) => {
             </div>
           </div>
 
-          <div className="hidden md:flex md:w-1/2 items-center justify-center bg-gradient-to-br from-neutral-800 to-neutral-900 relative overflow-hidden">
+          <div className='hidden md:flex md:w-1/2 items-center justify-center bg-gradient-to-br from-neutral-800 to-neutral-900 relative overflow-hidden'>
             <div className='absolute top-16 right-16 z-10 max-w-md'>
               <h2 className='text-white text-2xl font-semibold mb-4'>
                 Welcome back to Quickbet Movies!

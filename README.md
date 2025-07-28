@@ -1,6 +1,7 @@
 # QuickBet Movies - Documentación Técnica Completa
 
 ## Índice
+
 1. [Descripción General del Proyecto](#descripción-general-del-proyecto)
 2. [Arquitectura del Sistema](#arquitectura-del-sistema)
 3. [Stack Tecnológico](#stack-tecnológico)
@@ -22,6 +23,7 @@
 **QuickBet Movies** es una aplicación web moderna de catálogo de películas que simula una plataforma tipo Netflix/streaming. Desarrollada como prueba técnica, utiliza la API de TMDB (The Movie Database) para proporcionar una experiencia completa de descubrimiento y navegación de películas.
 
 ### Características Principales
+
 - 📱 **Responsive Design**: Adaptable a desktop, tablet y móvil
 - 🔍 **Búsqueda en Tiempo Real**: Con debounce automático
 - 🎬 **Catálogo Completo**: Películas populares, trending, por género
@@ -79,28 +81,33 @@ La aplicación sigue una **arquitectura modular y escalable** basada en principi
 ## Stack Tecnológico
 
 ### Core Framework
+
 - **Next.js 15.4.4**: Framework React con App Router
 - **React 19.1.0**: Biblioteca de UI con las últimas features
 - **TypeScript 5.x**: Tipado estático estricto
 
 ### Gestión de Estado y Datos
+
 - **TanStack Query v5.83.0**: Server state management
 - **Context API**: Client state (favoritos, sidebar)
 - **Axios 1.11.0**: Cliente HTTP con interceptors
 
 ### Styling y UI
+
 - **Tailwind CSS v4**: Framework CSS utility-first
 - **Radix UI**: Componentes base accesibles
 - **Lucide React**: Librería de iconos
 - **IBM Plex Sans**: Tipografía del proyecto
 
 ### Herramientas de Desarrollo
+
 - **ESLint**: Linting con reglas estrictas
 - **Prettier**: Formateo automático de código
 - **TypeScript**: Configuración strict
 - **Yarn**: Gestor de paquetes
 
 ### API Externa
+
 - **TMDB API v3**: The Movie Database
 - **Bearer Token**: Autenticación segura
 
@@ -207,16 +214,19 @@ export const api = axios.create({
 ### Interceptors y Middleware
 
 **Request Interceptor**:
+
 - Añade idioma por defecto (`en-US`)
 - Normaliza parámetros de consulta
 
 **Response Interceptor**:
+
 - Manejo centralizado de errores 401
 - Logging de errores de autenticación
 
 ### Servicios por Dominio
 
 #### Movies Service (`src/services/movies.service.ts`)
+
 ```typescript
 export const moviesService = {
   getPopular: (page: number = 1) => Promise<TMDBPaginatedResponse<Movie>>,
@@ -235,10 +245,12 @@ export const moviesService = {
 ```
 
 #### Genres Service (`src/services/genres.service.ts`)
+
 - Obtención de géneros de películas
 - Cache de 24 horas por estabilidad
 
 #### Search Service (`src/services/search.service.ts`)
+
 - Búsqueda de películas
 - Búsqueda múltiple (movies, TV, personas)
 - Debounce automático integrado
@@ -277,11 +289,14 @@ La aplicación utiliza una **arquitectura híbrida** de gestión de estado:
 new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 1000 * 60 * 5,        // 5 minutos
-      gcTime: 1000 * 60 * 10,          // 10 minutos
+      staleTime: 1000 * 60 * 5, // 5 minutos
+      gcTime: 1000 * 60 * 10, // 10 minutos
       retry: (failureCount, error) => {
         // No retry para errores 401/403
-        if (error?.response?.status === 401 || error?.response?.status === 403) {
+        if (
+          error?.response?.status === 401 ||
+          error?.response?.status === 403
+        ) {
           return false;
         }
         return failureCount < 3;
@@ -299,22 +314,23 @@ new QueryClient({
 
 #### Estrategias de Cache por Tipo de Datos
 
-| Tipo de Datos | Stale Time | GC Time | Justificación |
-|---------------|------------|---------|---------------|
-| **Géneros** | 24 horas | 48 horas | Datos estáticos, raramente cambian |
-| **Trending** | 5 min (day) / 6h (week) | 15 min / 12h | Frecuencia de actualización variable |
-| **Búsquedas** | 5 minutos | 10 minutos | Resultados temporales |
-| **Detalles** | 1 hora | 2 horas | Contenido estable |
-| **Listas** | 15 minutos | 30 minutos | Balance actualización/rendimiento |
+| Tipo de Datos | Stale Time              | GC Time      | Justificación                        |
+| ------------- | ----------------------- | ------------ | ------------------------------------ |
+| **Géneros**   | 24 horas                | 48 horas     | Datos estáticos, raramente cambian   |
+| **Trending**  | 5 min (day) / 6h (week) | 15 min / 12h | Frecuencia de actualización variable |
+| **Búsquedas** | 5 minutos               | 10 minutos   | Resultados temporales                |
+| **Detalles**  | 1 hora                  | 2 horas      | Contenido estable                    |
+| **Listas**    | 15 minutos              | 30 minutos   | Balance actualización/rendimiento    |
 
 #### Query Keys Pattern
 
 ```typescript
 export const MOVIE_QUERY_KEYS = {
   all: ['movies'] as const,
-  popular: (page: number) => [...MOVIE_QUERY_KEYS.all, 'popular', page] as const,
+  popular: (page: number) =>
+    [...MOVIE_QUERY_KEYS.all, 'popular', page] as const,
   details: (id: number) => [...MOVIE_QUERY_KEYS.all, 'details', id] as const,
-  byGenre: (genreId: number, page: number) => 
+  byGenre: (genreId: number, page: number) =>
     [...MOVIE_QUERY_KEYS.all, 'byGenre', genreId, page] as const,
   // ... más keys
 };
@@ -337,6 +353,7 @@ interface FavoritesContextType {
 ```
 
 **Características**:
+
 - Persistencia automática en localStorage
 - Prevención de duplicados
 - API intuitiva para componentes
@@ -345,6 +362,7 @@ interface FavoritesContextType {
 #### Sidebar Context
 
 Manejo del estado del sidebar con:
+
 - Query de búsqueda
 - Género seleccionado
 - Estado de visibilidad
@@ -362,9 +380,7 @@ export const usePopularMovies = (
   return useQuery({
     queryKey: MOVIE_QUERY_KEYS.popular(page),
     queryFn: () => moviesService.getPopular(page),
-    initialData: page === 1 && initialData 
-      ? { data: initialData } 
-      : undefined,
+    initialData: page === 1 && initialData ? { data: initialData } : undefined,
     staleTime: 1000 * 60 * 15,
     gcTime: 1000 * 60 * 30,
   });
@@ -376,7 +392,7 @@ export const usePopularMovies = (
 ```typescript
 export const useMovieSearch = (query: string, page: number = 1) => {
   const [debouncedQuery] = useDebounce(query, 300);
-  
+
   return useQuery({
     queryKey: SEARCH_QUERY_KEYS.movies(debouncedQuery, page),
     queryFn: () => searchService.searchMovies(debouncedQuery, page),
@@ -397,6 +413,7 @@ La aplicación implementa **Atomic Design** de manera estricta, organizando comp
 #### Atoms (Elementos Básicos)
 
 **FavoriteButton** (`src/components/atoms/favorite-button/`)
+
 ```typescript
 interface FavoriteButtonProps {
   movie: Movie;
@@ -404,12 +421,14 @@ interface FavoriteButtonProps {
   className?: string;
 }
 ```
+
 - Botón interactivo para gestionar favoritos
 - Integración directa con `useFavorites`
 - Animaciones suaves y feedback visual
 - Estados: normal, hover, favorito
 
 **RatingCircle** (`src/components/atoms/rating-circle/`)
+
 ```typescript
 interface RatingCircleProps {
   rating: number;
@@ -418,12 +437,14 @@ interface RatingCircleProps {
   showAnimation?: boolean;
 }
 ```
+
 - Círculo SVG animado para mostrar rating
 - Colores dinámicos basados en puntuación
 - Optimizado para diferentes tamaños
 - Animación opcional de progreso
 
 **NavigationLink** (`src/components/atoms/navigation-link/`)
+
 - Enlaces de navegación con estados activos
 - Integración con Next.js router
 - Accesibilidad mejorada
@@ -431,6 +452,7 @@ interface RatingCircleProps {
 #### Molecules (Combinaciones Simples)
 
 **MovieCard** (`src/components/molecules/movie-card/`)
+
 ```typescript
 interface MovieCardProps {
   movie: Movie;
@@ -438,6 +460,7 @@ interface MovieCardProps {
   onClick?: (movie: Movie) => void;
 }
 ```
+
 - Tarjeta completa de película
 - Imagen optimizada con Next.js Image
 - Rating y favoritos integrados
@@ -445,18 +468,21 @@ interface MovieCardProps {
 - Click handler para navegación
 
 **HeroBanner** (`src/components/molecules/hero-banner/`)
+
 - Banner principal de la aplicación
 - Imagen de fondo dinámica
 - Overlay con gradiente
 - Información destacada de película
 
 **Navbar** (`src/components/molecules/navbar/`)
+
 - Navegación principal de la aplicación
 - Logo y links principales
 - Responsive design
 - Estado activo de rutas
 
 **Sidebar** (`src/components/molecules/sidebar/`)
+
 - Barra lateral con filtros
 - Lista de géneros
 - Búsqueda integrada
@@ -465,6 +491,7 @@ interface MovieCardProps {
 #### Organisms (Componentes Complejos)
 
 **MoviesGrid** (`src/components/organisms/movies-grid/`)
+
 ```typescript
 interface MoviesGridProps {
   movies: Movie[];
@@ -477,6 +504,7 @@ interface MoviesGridProps {
   onMovieClick: (movie: Movie) => void;
 }
 ```
+
 - Grid responsivo de películas
 - Paginación integrada
 - Estados de loading y error
@@ -484,12 +512,14 @@ interface MoviesGridProps {
 - Manejo de eventos de click
 
 **HomePageClient** (`src/components/organisms/home-page-client/`)
+
 - Lógica principal de la página home
 - Gestión de múltiples queries (popular, género, búsqueda)
 - Switching inteligente entre estados
 - Memoización para performance
 
 **MovieDetailsHero** (`src/components/organisms/movie-details-hero/`)
+
 - Hero section de detalles de película
 - Información completa (géneros, duración, etc.)
 - Trailer embedido
@@ -497,6 +527,7 @@ interface MoviesGridProps {
 - Botones de acción
 
 **MovieRecommendations** (`src/components/organisms/movie-recommendations/`)
+
 - Carrusel de películas recomendadas
 - Filtrado por géneros similares
 - Scroll horizontal
@@ -505,12 +536,14 @@ interface MoviesGridProps {
 #### Templates (Layouts)
 
 **MainLayout** (`src/components/templates/main-layout/`)
+
 ```typescript
 interface MainLayoutProps {
   children: React.ReactNode;
   className?: string;
 }
 ```
+
 - Layout principal con sidebar
 - Responsive grid system
 - Gestión de estado del sidebar
@@ -541,6 +574,7 @@ Algunos componentes complejos utilizan **Compound Components**:
 #### Error Boundaries
 
 Implementación de error boundaries en múltiples niveles:
+
 - Global: `app/error.tsx`
 - Por página: `app/movie-details/[id]/error.tsx`
 - Por componente: Componentes críticos tienen try/catch
@@ -556,6 +590,7 @@ La aplicación aprovecha **Next.js 15.4.4 con App Router** para implementar dife
 #### Server-Side Rendering (SSR)
 
 **Home Page** (`src/app/page.tsx`)
+
 ```typescript
 export default async function HomePage() {
   let initialPopularMovies: TMDBPaginatedResponse<Movie> | undefined;
@@ -576,6 +611,7 @@ export default async function HomePage() {
 ```
 
 **Beneficios**:
+
 - **SEO Optimizado**: Contenido indexable desde el primer load
 - **Performance Inicial**: Datos pre-cargados desde el servidor
 - **UX Mejorada**: Contenido visible inmediatamente
@@ -584,12 +620,13 @@ export default async function HomePage() {
 #### Static Site Generation (SSG)
 
 **Movie Details** (`src/app/movie-details/[id]/page.tsx`)
+
 ```typescript
 export async function generateStaticParams() {
   try {
     const response = await moviesService.getPopular(1);
     const movies = response.data.results;
-    
+
     // Pre-generar las 20 películas más populares
     return movies.slice(0, 20).map((movie: Movie) => ({
       id: movie.id.toString(),
@@ -616,6 +653,7 @@ export default async function MovieDetailsPage({ params }: PageProps) {
 ```
 
 **Características**:
+
 - **Build Time Generation**: Las páginas más populares se pre-generan
 - **Fallback Strategy**: ISR para páginas no pre-generadas
 - **Performance Extrema**: Tiempo de carga casi instantáneo
@@ -624,6 +662,7 @@ export default async function MovieDetailsPage({ params }: PageProps) {
 #### Client-Side Rendering (CSR)
 
 **Componentes Interactivos**
+
 ```typescript
 'use client';
 
@@ -633,12 +672,13 @@ export const HomePageClient: React.FC<HomePageClientProps> = ({
   // Lógica de cliente para interactividad
   const { searchQuery, selectedGenreId } = useSidebarContext();
   const { data: popularMoviesData } = usePopularMovies(1, initialPopularMovies);
-  
+
   // ... resto del componente
 };
 ```
 
 **Uso estratégico**:
+
 - **Interactividad**: Búsqueda, filtros, favoritos
 - **Estado Dinámico**: Componentes que necesitan estado del cliente
 - **Optimistic Updates**: Feedback inmediato para acciones de usuario
@@ -651,9 +691,10 @@ export const HomePageClient: React.FC<HomePageClientProps> = ({
 // Memoización de componentes pesados
 export const MovieCard = React.memo<MovieCardProps>(({ movie, onClick }) => {
   const posterUrl = useMemo(
-    () => movie.poster_path 
-      ? imageUtils.getPosterUrl(movie.poster_path, 'w342')
-      : '/placeholder-movie.jpg',
+    () =>
+      movie.poster_path
+        ? imageUtils.getPosterUrl(movie.poster_path, 'w342')
+        : '/placeholder-movie.jpg',
     [movie.poster_path]
   );
 
@@ -672,14 +713,14 @@ const { movies, isLoading, error, totalPages, title } = useMemo(() => {
     };
   }
   // ... lógica adicional
-}, [searchQuery, searchMoviesData, /* ... otras dependencias */]);
+}, [searchQuery, searchMoviesData /* ... otras dependencias */]);
 ```
 
 #### Lazy Loading de Componentes
 
 ```typescript
 // Lazy loading para componentes no críticos
-const AuthModal = lazy(() => 
+const AuthModal = lazy(() =>
   import('@/components/molecules/auth-modal').then(module => ({
     default: module.AuthModal
   }))
@@ -704,20 +745,20 @@ const AuthModal = lazy(() =>
 const CACHE_STRATEGIES = {
   // Datos estáticos - cache largo
   genres: {
-    staleTime: 1000 * 60 * 60 * 24,  // 24 horas
-    gcTime: 1000 * 60 * 60 * 48,     // 48 horas
+    staleTime: 1000 * 60 * 60 * 24, // 24 horas
+    gcTime: 1000 * 60 * 60 * 48, // 48 horas
   },
-  
+
   // Datos dinámicos - cache corto
   trending: {
-    staleTime: 1000 * 60 * 5,        // 5 minutos
-    gcTime: 1000 * 60 * 15,          // 15 minutos
+    staleTime: 1000 * 60 * 5, // 5 minutos
+    gcTime: 1000 * 60 * 15, // 15 minutos
   },
-  
+
   // Búsquedas - cache temporal
   search: {
-    staleTime: 1000 * 60 * 2,        // 2 minutos
-    gcTime: 1000 * 60 * 5,           // 5 minutos
+    staleTime: 1000 * 60 * 2, // 2 minutos
+    gcTime: 1000 * 60 * 5, // 5 minutos
   },
 };
 ```
@@ -731,9 +772,9 @@ export const usePopularMovies = (page: number) => {
     queryKey: MOVIE_QUERY_KEYS.popular(page),
     queryFn: () => moviesService.getPopular(page),
     staleTime: 1000 * 60 * 15,
-    refetchOnMount: false,          // No refetch si hay datos fresh
-    refetchOnWindowFocus: true,     // Refetch al volver a la ventana
-    refetchOnReconnect: true,       // Refetch al reconectar
+    refetchOnMount: false, // No refetch si hay datos fresh
+    refetchOnWindowFocus: true, // Refetch al volver a la ventana
+    refetchOnReconnect: true, // Refetch al reconectar
   });
 };
 ```
@@ -763,7 +804,7 @@ export const imageUtils = {
     if (!path) return null;
     return `${TMDB_IMAGE_BASE_URL}/${size}${path}`;
   },
-  
+
   // Función para obtener el tamaño óptimo según viewport
   getOptimalPosterSize: (containerWidth: number) => {
     if (containerWidth <= 200) return 'w185';
@@ -820,9 +861,9 @@ import { Heart, Search, Filter } from 'lucide-react';
 // next.config.ts
 const nextConfig: NextConfig = {
   experimental: {
-    optimizePackageImports: ['lucide-react'],  // Optimización automática
+    optimizePackageImports: ['lucide-react'], // Optimización automática
   },
-  
+
   // Reportar Web Vitals
   onDemandEntries: {
     maxInactiveAge: 25 * 1000,
@@ -859,15 +900,15 @@ graph TD
     C -->|Filtra por Género| E[Películas por Género]
     C -->|Hace Click en Película| F[Detalles de Película]
     C -->|Agrega a Favoritos| G[Actualizar Favoritos]
-    
+
     D --> H[Paginación de Resultados]
     E --> H
     F --> I[Ver Recomendaciones]
     F --> J[Ver Trailer]
     F --> K[Ver Cast]
-    
+
     G --> L[Página de Favoritos]
-    
+
     H --> C
     I --> F
 ```
@@ -895,7 +936,7 @@ graph TD
 
 1. **Navegación**: Click en MovieCard
 2. **Router Push**: Navegar a `/movie-details/[id]`
-3. **Carga de Datos**: 
+3. **Carga de Datos**:
    - Detalles básicos (SSG si está pre-generado)
    - Videos/trailers
    - Cast y crew
@@ -918,10 +959,10 @@ const LoadingStates = {
       ))}
     </div>
   ),
-  
+
   // Spinner para acciones rápidas
   InlineSpinner: () => <Spinner size="sm" />,
-  
+
   // Full page loading
   PageLoader: () => (
     <div className="min-h-screen flex items-center justify-center">
@@ -943,14 +984,14 @@ const ErrorBoundaries = {
       <button onClick={reset}>Intentar de nuevo</button>
     </div>
   ),
-  
+
   // Por página - errores de página
   PageErrorBoundary: ({ error }) => (
     <div className="error-section">
       <p>Error cargando esta página</p>
     </div>
   ),
-  
+
   // Por componente - errores locales
   ComponentErrorBoundary: ({ children, fallback }) => (
     <ErrorBoundary fallback={fallback}>
@@ -984,7 +1025,9 @@ api.interceptors.response.use(
     // Manejo específico por código de error
     switch (error.response?.status) {
       case 401:
-        console.error('TMDB API authentication error - check your access token');
+        console.error(
+          'TMDB API authentication error - check your access token'
+        );
         break;
       case 429:
         console.warn('Rate limit exceeded - implement retry with backoff');
@@ -1008,21 +1051,24 @@ const queryClient = new QueryClient({
     queries: {
       retry: (failureCount, error) => {
         const axiosError = error as AxiosError;
-        
+
         // No retry para errores de autenticación
         if ([401, 403].includes(axiosError?.response?.status)) {
           return false;
         }
-        
+
         // No retry para errores de cliente
-        if (axiosError?.response?.status >= 400 && axiosError?.response?.status < 500) {
+        if (
+          axiosError?.response?.status >= 400 &&
+          axiosError?.response?.status < 500
+        ) {
           return false;
         }
-        
+
         // Retry hasta 3 veces para errores de servidor
         return failureCount < 3;
       },
-      
+
       retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
     },
   },
@@ -1050,7 +1096,7 @@ class MovieErrorBoundary extends React.Component {
       stack: error.stack,
       componentStack: errorInfo.componentStack,
     });
-    
+
     // Aquí se podría enviar a un servicio de logging
     // logErrorToService(error, errorInfo);
   }
@@ -1079,7 +1125,8 @@ class MovieErrorBoundary extends React.Component {
 const ERROR_MESSAGES = {
   NETWORK_ERROR: 'Check your internet connection and try again.',
   API_TIMEOUT: 'The request is taking too long. Please try again.',
-  MOVIE_NOT_FOUND: 'This movie is not available. Try searching for another one.',
+  MOVIE_NOT_FOUND:
+    'This movie is not available. Try searching for another one.',
   SEARCH_FAILED: 'Search is temporarily unavailable. Please try again.',
   GENERIC_ERROR: 'Something went wrong. Please refresh the page.',
 };
@@ -1090,7 +1137,7 @@ const getErrorMessage = (error: unknown): string => {
     if (error.response?.status === 404) return ERROR_MESSAGES.MOVIE_NOT_FOUND;
     if (!error.response) return ERROR_MESSAGES.NETWORK_ERROR;
   }
-  
+
   return ERROR_MESSAGES.GENERIC_ERROR;
 };
 ```
@@ -1122,8 +1169,10 @@ class CircuitBreaker {
   }
 
   private isOpen(): boolean {
-    return this.failures >= this.threshold &&
-           Date.now() - this.lastFailureTime < this.timeout;
+    return (
+      this.failures >= this.threshold &&
+      Date.now() - this.lastFailureTime < this.timeout
+    );
   }
 
   private onSuccess(): void {
@@ -1143,43 +1192,43 @@ class CircuitBreaker {
 // Para favoritos - update inmediato con rollback si falla
 const useFavoritesOptimistic = () => {
   const queryClient = useQueryClient();
-  
+
   const toggleFavorite = useMutation({
     mutationFn: async (movie: Movie) => {
       // Simular API call para favoritos
-      await new Promise(resolve => setTimeout(resolve, 100));
+      await new Promise((resolve) => setTimeout(resolve, 100));
       return movie;
     },
-    
+
     onMutate: async (movie) => {
       // Cancel outgoing refetches
       await queryClient.cancelQueries({ queryKey: ['favorites'] });
-      
+
       // Snapshot previous value
       const previousFavorites = queryClient.getQueryData(['favorites']);
-      
+
       // Optimistically update
       queryClient.setQueryData(['favorites'], (old: Movie[] = []) => {
-        const isFavorite = old.some(fav => fav.id === movie.id);
-        return isFavorite 
-          ? old.filter(fav => fav.id !== movie.id)
+        const isFavorite = old.some((fav) => fav.id === movie.id);
+        return isFavorite
+          ? old.filter((fav) => fav.id !== movie.id)
           : [...old, movie];
       });
-      
+
       return { previousFavorites };
     },
-    
+
     onError: (err, movie, context) => {
       // Rollback on error
       queryClient.setQueryData(['favorites'], context?.previousFavorites);
     },
-    
+
     onSettled: () => {
       // Always refetch after error or success
       queryClient.invalidateQueries({ queryKey: ['favorites'] });
     },
   });
-  
+
   return { toggleFavorite };
 };
 ```
@@ -1196,20 +1245,16 @@ const useFavoritesOptimistic = () => {
 // eslint.config.mjs
 export default [
   {
-    files: ["**/*.{js,jsx,ts,tsx}"],
-    extends: [
-      "next/core-web-vitals",
-      "next/typescript",
-      "prettier"
-    ],
-    plugins: ["prettier"],
+    files: ['**/*.{js,jsx,ts,tsx}'],
+    extends: ['next/core-web-vitals', 'next/typescript', 'prettier'],
+    plugins: ['prettier'],
     rules: {
-      "prettier/prettier": "error",
-      "@typescript-eslint/no-unused-vars": "error",
-      "@typescript-eslint/explicit-function-return-type": "off",
-      "@typescript-eslint/no-explicit-any": "error",
-      "react/prop-types": "off",
-      "react/react-in-jsx-scope": "off",
+      'prettier/prettier': 'error',
+      '@typescript-eslint/no-unused-vars': 'error',
+      '@typescript-eslint/explicit-function-return-type': 'off',
+      '@typescript-eslint/no-explicit-any': 'error',
+      'react/prop-types': 'off',
+      'react/react-in-jsx-scope': 'off',
     },
   },
 ];
@@ -1274,7 +1319,7 @@ const createWrapper = () => {
       mutations: { retry: false },
     },
   });
-  
+
   return ({ children }: { children: React.ReactNode }) => (
     <QueryClientProvider client={queryClient}>
       {children}
@@ -1326,7 +1371,7 @@ const renderWithProviders = (component: React.ReactElement) => {
 describe('MovieCard', () => {
   it('should render movie information correctly', () => {
     const onClickMock = jest.fn();
-    
+
     renderWithProviders(
       <MovieCard movie={mockMovie} onClick={onClickMock} />
     );
@@ -1337,7 +1382,7 @@ describe('MovieCard', () => {
 
   it('should call onClick when card is clicked', () => {
     const onClickMock = jest.fn();
-    
+
     renderWithProviders(
       <MovieCard movie={mockMovie} onClick={onClickMock} />
     );
@@ -1357,22 +1402,24 @@ import { test, expect } from '@playwright/test';
 test.describe('Movie Search', () => {
   test('should search for movies and display results', async ({ page }) => {
     await page.goto('/');
-    
+
     // Buscar película
     await page.fill('[data-testid="search-input"]', 'Inception');
     await page.waitForResponse('**/api.themoviedb.org/**');
-    
+
     // Verificar resultados
-    await expect(page.locator('[data-testid="movie-card"]')).toHaveCount.greaterThan(0);
+    await expect(
+      page.locator('[data-testid="movie-card"]')
+    ).toHaveCount.greaterThan(0);
     await expect(page.locator('text=Inception')).toBeVisible();
   });
 
   test('should navigate to movie details', async ({ page }) => {
     await page.goto('/');
-    
+
     // Click en primera película
     await page.click('[data-testid="movie-card"]:first-child');
-    
+
     // Verificar navegación
     await expect(page).toHaveURL(/\/movie-details\/\d+/);
     await expect(page.locator('[data-testid="movie-hero"]')).toBeVisible();

@@ -12,7 +12,8 @@ export const useMobileMenu = () => {
   // Close menu when screen size changes to desktop
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 768) { // md breakpoint
+      if (window.innerWidth >= 768) {
+        // md breakpoint
         setIsOpen(false);
       }
     };

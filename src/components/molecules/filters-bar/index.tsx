@@ -56,14 +56,14 @@ export const FiltersBar: React.FC<FiltersBarProps> = ({
       `}
     >
       {/* Search Input */}
-      <div className="flex-1 sm:max-w-xs">
-        <div className="relative">
+      <div className='flex-1 sm:max-w-xs'>
+        <div className='relative'>
           <input
-            type="text"
-            placeholder="Search keywords"
+            type='text'
+            placeholder='Search keywords'
             value={searchQuery}
             onChange={handleSearchInputChange}
-            className="
+            className='
               w-full
               h-[46px]
               bg-[#1C1C1C] 
@@ -78,23 +78,23 @@ export const FiltersBar: React.FC<FiltersBarProps> = ({
               focus:ring-0
               focus:border-b-[#717171]
               rounded-none
-            "
+            '
           />
           <Search
-            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white"
+            className='absolute right-3 top-1/2 transform -translate-y-1/2 text-white'
             size={20}
           />
         </div>
       </div>
 
       {/* Genre Select */}
-      <div className="flex-1 sm:max-w-xs">
+      <div className='flex-1 sm:max-w-xs'>
         <Select
           value={selectedGenreId ? selectedGenreId.toString() : 'all'}
           onValueChange={handleGenreSelect}
         >
           <SelectTrigger
-            className="
+            className='
               w-full
               h-[40px]
               bg-[#1C1C1C] 
@@ -110,14 +110,14 @@ export const FiltersBar: React.FC<FiltersBarProps> = ({
               active:outline-none 
               rounded-none 
               px-4
-            "
+            '
           >
-            <SelectValue placeholder="Select a genre" />
+            <SelectValue placeholder='Select a genre' />
           </SelectTrigger>
-          <SelectContent className="bg-[#1C1C1C] border-gray-600 text-white max-h-80 rounded-none overflow-y-auto">
+          <SelectContent className='bg-[#1C1C1C] border-gray-600 text-white max-h-80 rounded-none overflow-y-auto'>
             <SelectItem
-              value="all"
-              className="text-white hover:bg-[#717171] focus:bg-[#717171] focus:ring-0 focus-visible:ring-0 focus-visible:outline-none data-[highlighted]:bg-[#717171] data-[state=checked]:bg-[#717171] font-medium cursor-pointer"
+              value='all'
+              className='text-white hover:bg-[#717171] focus:bg-[#717171] focus:ring-0 focus-visible:ring-0 focus-visible:outline-none data-[highlighted]:bg-[#717171] data-[state=checked]:bg-[#717171] font-medium cursor-pointer'
             >
               All Genres
             </SelectItem>
@@ -125,7 +125,7 @@ export const FiltersBar: React.FC<FiltersBarProps> = ({
               <SelectItem
                 key={genre.id}
                 value={genre.id.toString()}
-                className="text-white hover:bg-[#717171] focus:bg-[#717171] focus:ring-0 focus-visible:ring-0 focus-visible:outline-none data-[highlighted]:bg-[#717171] data-[state=checked]:bg-[#717171] cursor-pointer"
+                className='text-white hover:bg-[#717171] focus:bg-[#717171] focus:ring-0 focus-visible:ring-0 focus-visible:outline-none data-[highlighted]:bg-[#717171] data-[state=checked]:bg-[#717171] cursor-pointer'
               >
                 {genre.name}
               </SelectItem>

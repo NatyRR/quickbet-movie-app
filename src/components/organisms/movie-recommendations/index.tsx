@@ -23,7 +23,7 @@ export const MovieRecommendations: React.FC<MovieRecommendationsProps> = ({
   currentMovieId,
 }) => {
   const router = useRouter();
-  
+
   // Usar el primer género de la película para obtener recomendaciones
   const primaryGenreId = movieGenres[0]?.id;
 
@@ -87,13 +87,13 @@ export const MovieRecommendations: React.FC<MovieRecommendationsProps> = ({
           Recommendations
         </h2>
 
-        <div className="grid grid-cols-2 gap-3 md:flex md:gap-4 md:justify-start flex-1 md:items-center">
+        <div className='grid grid-cols-2 gap-3 md:flex md:gap-4 md:justify-start flex-1 md:items-center'>
           {recommendations.slice(0, 6).map((movie) => (
             <RecommendationCard
               key={movie.id}
               movie={movie}
               onClick={handleMovieClick}
-              className="flex-shrink-0"
+              className='flex-shrink-0'
             />
           ))}
         </div>

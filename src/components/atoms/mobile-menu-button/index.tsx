@@ -34,9 +34,9 @@ export const MobileMenuButton: React.FC<MobileMenuButtonProps> = ({
       aria-label={isOpen ? 'Close menu' : 'Open menu'}
     >
       {isOpen ? (
-        <X size={24} className="text-white" />
+        <X size={24} className='text-white' />
       ) : (
-        <Menu size={24} className="text-white" />
+        <Menu size={24} className='text-white' />
       )}
     </button>
   );
